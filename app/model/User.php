@@ -12,17 +12,17 @@ require'../../vendor/autoload.php';
 
 class User{
 
-    private $full_name;
+    private $first_name;
     private $last_name;
     private $email;
     private $password;
     private $phone;
     private $conn;
 
-  public function __construct($full_name, $last_name, $email, $password, $phone)
+  public function __construct($first_name, $last_name, $email, $password, $phone)
   {
     $this->conn = Database::connexion();
-    $this->setFullName($full_name);
+    $this->setFullName($first_name);
     $this->setLastName($last_name);
     $this->setEmail($email);
     $this->setPassword($password);
@@ -31,30 +31,31 @@ class User{
   public function CreateUser()
   {
 
-    $full_name = $this->getFullName();
+    $first_name = $this->getFirstName();
     $last_name = $this->getLastName();
     $email = $this->getEmail();
     $password = $this->getPassword();
     $phone = $this->getPhone();
 
-    $FullNameErreur = $this->validateFullName($full_name);
+    $FirstNameErreur = $this->validateFirstName($first_name);
+    $LastNameErreur = $this->validateLastName($last_name);
     $EmailErreur = $this->validateEmail($email);
     $passwErreur = $this->validatePassw($password);
 
 
-    if (!empty($FullNameErreur) || !empty($EmailErreur) || !empty($passwErreur)) 
+    if (!empty($FirstNameErreur) || !empty($LastNameErreur) || !empty($EmailErreur) || !empty($passwErreur)) 
     {
-        echo"Erreur de Validation : $FullNameErreur $EmailErreur $passwErreur";
+        echo"Erreur de Validation : $FirstNameErreur $LastNameErreur $EmailErreur $passwErreur";
         return false;
     }
 
         $hash_passw = password_hash($this->password, PASSWORD_DEFAULT);
 
     try{
-        $requete =  "INSERT INTO 'user' ('fullname', 'last_name', 'email', 'password', 'phone')
-        VALUES(:full_name, :last_name, :email, :password, :phone)";
+        $requete =  "INSERT INTO 'user' ('firstname', 'last_name', 'email', 'password', 'phone')
+        VALUES(:first_name, :last_name, :email, :password, :phone)";
            $stmt = $this->conn->prepare($requete);
-           $stmt->bindParam(':full_name', $full_name);
+           $stmt->bindParam(':first_name', $first_name);
            $stmt->bindParam(':last_name', $last_name);
            $stmt->bindParam(':email', $email);
            $stmt->bindParam(':password', $hash_passw);
@@ -88,9 +89,13 @@ class User{
         return false;
     }
 
-  public function validateFullName($full_name)
+  public function validateFirstName($first_name)
   {
-    return empty($full_name) ? 'Nom Complet est requis' : '';
+    return empty($first_name) ? 'Nom est requis' : '';
+  }
+  public function validateLastName($last_name)
+  {
+    return empty($last_name) ? 'Prénom est requis' : '';
   }
 
   private function validateEmail($email)
@@ -165,13 +170,13 @@ class User{
     }
   }
   ////Accesseurs full-name.///////////////////
-    public function getFullName()
+    public function getFirstName()
     {
-        return $this->full_name;
+        return $this->first_name;
     }
-    public function setFullName($full_name)
+    public function setFullName($first_name)
     {
-        $this->full_name=$full_name;
+        $this->first_name=$first_name;
     } 
 
   ////Accesseurs last-name///////////////////

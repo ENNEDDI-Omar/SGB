@@ -1,6 +1,6 @@
 CREATE Table User (
     id INT PRIMARY KEY auto_increment,
-    fullname varchar(255),
+    first_name varchar(255),
     last_name varchar(255),
     email varchar(255),
     password varchar(255),
@@ -9,6 +9,7 @@ CREATE Table User (
 
 CREATE TABLE Book (
     id INT PRIMARY KEY auto_increment,
+    cover VARCHAR(255),
     title varchar(255),
     author varchar(255),
     genre varchar(255),

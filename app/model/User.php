@@ -52,7 +52,7 @@ class User{
         $hash_passw = password_hash($this->password, PASSWORD_DEFAULT);
 
     try{
-        $requete =  "INSERT INTO 'user' ('firstname', 'last_name', 'email', 'password', 'phone')
+        $requete =  "INSERT INTO 'user' ('first_name', 'last_name', 'email', 'password', 'phone')
         VALUES(:first_name, :last_name, :email, :password, :phone)";
            $stmt = $this->conn->prepare($requete);
            $stmt->bindParam(':first_name', $first_name);
@@ -63,13 +63,13 @@ class User{
 
         $result = $stmt->execute();
 
-      if ($result) 
+      if ($result)  
         {
             $lastId = $this->conn->lastInsertId();
             $requeteU_R = "INSERT INTO 'user_role'('id_user', 'id_role')
-                            VALUES(':userId', '2')";
+                            VALUES(:userId, 2)";
             $stmtU_R = $this->conn->prepare($requeteU_R);
-            $stmtU_R->bindparam(':userId', $lastId);
+            $stmtU_R->bindParam(':userId', $lastId);
             $resultU_R = $stmtU_R->execute();
 
             if ($resultU_R) {
@@ -91,21 +91,34 @@ class User{
 
   public function validateFirstName($first_name)
   {
-    return empty($first_name) ? 'Nom est requis' : '';
+    return empty($first_name) ? 'Nom est Obligatoire!' : '';
   }
   public function validateLastName($last_name)
   {
-    return empty($last_name) ? 'Prénom est requis' : '';
+    return empty($last_name) ? 'Prénom est Obligatoire!' : '';
   }
 
   private function validateEmail($email)
   {
-    return empty($email) ? 'Adresse E-mail est requise' : '';
+    if (empty($email)) 
+    {
+        return 'Adresse E-mail est Obligatoire!';
+    }
+
+    $requetVerif = "SELECT * FROM 'user' WHERE 'email'=:email";
+    $stmtVerif = $this->conn->prepare($requetVerif);
+    $stmtVerif->bindParam(':email', $email);
+    $stmtVerif->execute();
+
+    if ($stmtVerif->rowCount()>0) {
+        return 'Email déja Utilisé!';
+    }
+    return '';
   }
 
   private function validatePassw($password)
   {
-    return empty($password) ? 'Mot de Passe est Obligatoire' : '';
+    return empty($password) ? 'Mot de Passe est Obligatoire!' : '';
   }
 
   public function getAllUsers()
@@ -163,6 +176,7 @@ class User{
     if (password_verify($password, $row['password'])) 
     {
         $_SESSION['role'] = $row['id_role'];
+        $_SESSION['user_id']=$row['id'];
         return true;
     }else {
         echo "Mot de Passe Incorrecte";

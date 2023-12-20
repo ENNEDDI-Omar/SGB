@@ -44,7 +44,7 @@ class AuthController
                 header('location:../../views/auth/login.php?Welcomeadmin');
                 exit();
             case '2':
-                header('location:../../views/auth/login.php?Welcomeuser');
+                header('location:../../views/auth/login.php?user');
                 exit();    
             
             default:
@@ -66,7 +66,7 @@ class AuthController
     $phone = $_POST['phone'];
 
     $userController = new AuthController();
-   $userController->registre($firstname, $lastname, $email, $passw, $phone);
+   $userController->registre($firstname, $last_name, $email, $passw, $phone);
    }
 
 

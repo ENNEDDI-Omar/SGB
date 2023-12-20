@@ -52,7 +52,7 @@ class User{
         $hash_passw = password_hash($this->password, PASSWORD_DEFAULT);
 
     try{
-        $requete =  "INSERT INTO 'user' ('first_name', 'last_name', 'email', 'password', 'phone')
+        $requete =  "INSERT INTO `user`(`first_name`, `last_name`, `email`, `password`, `phone`)
         VALUES(:first_name, :last_name, :email, :password, :phone)";
            $stmt = $this->conn->prepare($requete);
            $stmt->bindParam(':first_name', $first_name);
@@ -66,7 +66,7 @@ class User{
       if ($result)  
         {
             $lastId = $this->conn->lastInsertId();
-            $requeteU_R = "INSERT INTO 'user_role'('id_user', 'id_role')
+            $requeteU_R = "INSERT INTO `user_role`(`id_user`, `id_role`)
                             VALUES(:userId, 2)";
             $stmtU_R = $this->conn->prepare($requeteU_R);
             $stmtU_R->bindParam(':userId', $lastId);
@@ -105,7 +105,7 @@ class User{
         return 'Adresse E-mail est Obligatoire!';
     }
 
-    $requetVerif = "SELECT * FROM 'user' WHERE 'email'=:email";
+    $requetVerif = "SELECT * FROM `user` WHERE `email`=:email";
     $stmtVerif = $this->conn->prepare($requetVerif);
     $stmtVerif->bindParam(':email', $email);
     $stmtVerif->execute();

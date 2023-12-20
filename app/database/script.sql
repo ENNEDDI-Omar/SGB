@@ -39,8 +39,8 @@ CREATE Table Role (
  CREATE Table User_Role(
     id_user INT,
     id_role INT,
-    Foreign Key (id_user) REFERENCES Role(id) on delete CASCADE,
-    Foreign Key (id_role) REFERENCES User(id) on delete CASCADE
+    Foreign Key (id_user) REFERENCES User(id) on delete CASCADE,
+    Foreign Key (id_role) REFERENCES Role(id) on delete CASCADE
  );
 
 

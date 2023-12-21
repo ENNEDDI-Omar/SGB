@@ -66,7 +66,7 @@ class AuthController
     $phone = $_POST['phone'];
 
     $userController = new AuthController();
-   $userController->registre($firstname, $last_name, $email, $passw, $phone);
+    $userController->registre($firstname, $last_name, $email, $passw, $phone);
    }
 
 

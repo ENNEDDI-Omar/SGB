@@ -1,3 +1,7 @@
+-- Active: 1703147210069@@127.0.0.1@3306@sgb
+
+
+use DATABASE sgb;
 CREATE Table User (
     id INT PRIMARY KEY auto_increment,
     first_name varchar(255),
@@ -31,7 +35,7 @@ CREATE Table Role (
     return_date DATE,
     is_returned INT,
     id_user INT,
-    id_book INT
+    id_book INT,
     Foreign Key (id_user) REFERENCES User(id) on delete CASCADE,
     Foreign Key (id_book) REFERENCES Book(id) on delete CASCADE
  );

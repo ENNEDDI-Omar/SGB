@@ -8,7 +8,7 @@ class BooksController
 {
     public function showBooks()
     {
-        $books = new Book(null, null, null, null, null, null, null, null);
+        $books = new Book('', '', '', '', '', '', '', '');
         $row = $books->getAllBooks();
         if ($row) 
         {
@@ -27,7 +27,7 @@ class BooksController
          
         if ($books->addBook($cover, $titel, $author, $genre, $description, $publication_year, $total_copies, $available_copies)) 
         {
-           header('location:../../../views/admin');
+           header('location:../../../views/admin/dash.php');
         }else 
         {
           echo"Erreur d'Insertion des Livres";
@@ -42,7 +42,7 @@ class BooksController
 
         if ($result) {
             echo 'Livre Supprimé avec Succè';
-            header('location:../../../views/admin');
+            header('location:../../../views/admin/dash.php');
         }else {
             echo 'Erreur de Suppression!';
         }
@@ -56,7 +56,7 @@ class BooksController
 
          if ($result) {
             echo "Livre mis à jour avec succés!";
-            header('location:../../../../views/admin');
+            header('location:../../../../views/admin/dash.php');
          }else {
             echo "Erreur lors de la mis à jour du Livre!!!";
          }

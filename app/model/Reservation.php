@@ -97,7 +97,7 @@ class Reservation
         $this->id_book = $id_book;
     }
 
-    // Méthode pour ajouter une réservation /////
+    // Methode pour ajouter une réservation /////
     public function addReservation($description, $reservation_date, $return_date, $id_user, $id_book)
     {
         try {
@@ -118,7 +118,7 @@ class Reservation
     }
 
 
-
+   ////Methode de l'affichage//////////////
     public function showReservation()
     {
         try {
